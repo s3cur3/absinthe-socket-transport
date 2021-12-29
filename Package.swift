@@ -14,7 +14,7 @@ let package = Package(
     ],
     dependencies: [
       .package(url: "https://github.com/davidstump/SwiftPhoenixClient.git", from: "1.3.0"),
-      .package(name: "Apollo", url: "https://github.com/apollographql/apollo-ios.git", .upToNextMinor(from: "0.41.0")),
+      .package(name: "Apollo", url: "https://github.com/apollographql/apollo-ios.git", .exact("0.50.0")),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
