@@ -34,9 +34,10 @@ public class AbsintheSocketTransport {
    */
   public convenience init (
     _ endpoint: String,
-    params: Payload = [:]
+    params: Payload = [:],
+    joinParams: Payload = [:]
   ) {
-    self.init(endpoint, closedParams: { return params })
+    self.init(endpoint, closedParams: { return params }, joinParams: joinParams)
   }
 
   /**
@@ -53,10 +54,11 @@ public class AbsintheSocketTransport {
   public init (
     _ endpoint: String,
     closedParams: @escaping PayloadClosure = { return [:] },
+    joinParams: Payload = [:],
     connectOnInit: Bool = true
   ) {
     self.socket = SwiftPhoenixClient.Socket.init(endpoint, paramsClosure: closedParams)
-    self.channel = socket.channel(Topics.absinthe)
+    self.channel = socket.channel(Topics.absinthe, params: joinParams)
 
     self.socket.delegateOnOpen(to: self) { target in target.socketDidConnect() }
     self.socket.delegateOnMessage(to: self) { target, message in target.socketDidReceiveMessage(message) }
